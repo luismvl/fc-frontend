@@ -1,0 +1,79 @@
+.candidate-form {
+  width: 500px;
+  min-width: 350px;
+  padding: 24px;
+}
+
+.candidate-form__header {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.candidate-form__image {
+  width: 100px;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  padding: 4px;
+  background-color: #E6E6EA;
+}
+
+.candidate-form__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.candidate-form__name {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+
+.candidate-form__location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--grey-5);
+}
+
+.candidate-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.double-input {
+  display: flex;
+  gap: 24px;
+}
+
+.double-input .input-group {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.cv-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.candidate-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 15px;
+}
+
+.candidate-cv {
+  min-width: 600px;
+  flex-grow: 1;
+  border-radius: 20px;
+}
+
+.candidate-cv iframe {
+  border-radius: 20px;
+  border: none;
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.25);
+}

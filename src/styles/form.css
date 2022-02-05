@@ -1,0 +1,66 @@
+.form {
+  display: flex;
+  flex-flow: column;
+  gap: 30px;
+}
+
+/* Separar el input-group en otro archivo? */
+
+.input-group {
+  font-size: 14px;
+}
+
+.input-group__label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.input-group__input {
+  height: 40px;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #f8f8f9;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+}
+
+.input-group__input::placeholder {
+  color: var(--grey-4);
+}
+
+.input-group--checkbox {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.checkbx-inputs--column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group--checkbox .input-group__input {
+  width: auto;
+  height: auto;
+  margin: 5px;
+}
+
+.input-group--checkbox .input-group__label {
+  font-weight: 500;
+  margin: 0;
+  display: inline;
+}
+
+.input-group--select .input-group__input {
+  padding-right: 0;
+  border-right: 15px solid #f8f8f9;
+}
+
+.input-group--file .input-group__input {
+  display: none;
+}

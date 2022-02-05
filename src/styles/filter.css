@@ -1,0 +1,49 @@
+.filter {
+  display: flex;
+  align-items: center;
+}
+
+.filter__label {
+  font-weight: 700;
+  font-size: 18px;
+  margin-right: 24px;
+}
+
+.filter__cuntomInput {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--grey-3);
+  border-radius: 8px;
+  padding: 12px 15px;
+}
+
+.filter__inputContainer {
+  display: inline-block;
+}
+
+.filter__input-hidden-placeholder {
+  height: 0;
+  visibility: hidden;
+}
+.filter__input {
+  display: inline;
+  width: 100%;
+  background: none;
+  color: var(--grey-5);
+  border: none;
+}
+
+.filter__input:focus {
+  outline: none;
+}
+
+.filter__input::placeholder,
+.filter__input-hidden-placeholder {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.filter__icon {
+  color: var(--grey-6);
+  margin-right: 10px;
+}
