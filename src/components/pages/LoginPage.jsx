@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 
-import '../../styles/login.css';
-import '../../styles/form.css';
-import '../../styles/general.css';
+import '../../../src/styles/login.css';
+import '../../../src/styles/form.css';
+import '../../../src/styles/general.css';
 
 import Logo from '../pure/Logo';
 import InputText from '../pure/InputText';
@@ -11,17 +11,19 @@ import InputCheckbox from '../pure/InputCheckbox';
 
 import { useAuth } from '../../hooks/useAuth';
 
-const Login = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const { login, auth } = useAuth();
   if (auth) {
     return <Navigate to="/candidates" />
-  } else {
-    return (
-      <div className="login-container">
-        <div className="login">
+  }
+
+  return (
+    <div className="login-container">
+      <div className="login">
+        <div className="login__form">
           <Logo />
-          <form className="login__form form" onSubmit={e => {
+          <form className="form" onSubmit={e => {
             e.preventDefault();
             login();
             navigate('/candidates');
@@ -51,17 +53,17 @@ const Login = () => {
               Iniciar Sesión
             </button>
           </form>
-          <div className="login__footer">
-            <p>Copyright © 2021 Open Bootcamp SL, Imagina Group</p>
-            <p>Todos los derechos reservados.</p>
-            <p><a className="login__privacy-policy-link" href="#">Política de Privacidad</a></p>
-          </div>
         </div>
-
+        <div className="login__footer">
+          <p>Copyright © 2021 Open Bootcamp SL, Imagina Group</p>
+          <p>Todos los derechos reservados.</p>
+          <p><a className="login__privacy-policy-link" href="##">Política de Privacidad</a></p>
+        </div>
       </div>
-    );
-  }
+
+    </div>
+  );
 
 };
 
-export default Login;
+export default LoginPage;

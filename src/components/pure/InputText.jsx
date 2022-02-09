@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import '../../styles/form.css'
 
-const InputText = ({ labelText, placeholder, name, type }) => {
+const InputText = ({ labelText, placeholder, name, type, ...rest }) => {
   return (
     <div className="input-group">
       <label className="input-group__label" htmlFor={name}>{labelText}</label>
-      <input className="input-group__input" type={type} name={name} id={name} placeholder={placeholder} />
+      <input className="input-group__input" type={type} name={name} id={name} placeholder={placeholder} {...rest}/>
     </div>
   );
 };

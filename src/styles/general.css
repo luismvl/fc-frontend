@@ -75,3 +75,18 @@
 .tag__icon {
   cursor: pointer;
 }
+
+.grow-1 {
+  flex-grow: 1;
+}
+
+.candidates-details-wrapper,
+.candidates-list-wrapper {
+  display: flex;
+  gap: 40px;
+  margin: 40px;
+}
+
+.candidates-list-wrapper {
+  flex-wrap: nowrap;
+}

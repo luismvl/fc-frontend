@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CandidateRow from './CandidateRow';
+import CandidateRow from '../pure/CandidateRow';
 import { BiSortAlt2 } from 'react-icons/bi';
 
 import '../../styles/table.css';

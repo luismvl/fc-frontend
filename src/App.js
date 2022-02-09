@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './hooks/useAuth';
 
-import RequireAuth from './components/container/RequireAuth';
-import Login from './components/container/Login';
-import CandidatesList from './components/container/CandidatesList';
+import RequireAuth from './components/pure/RequireAuth';
 import Navbar from './components/container/Navbar';
-import CandidateData from './components/container/CandidateData';
+import LoginPage from './components/pages/LoginPage';
+import CandidatesListPage from './components/pages/CandidatesListPage';
+import CandidateDetailsPage from './components/pages/CandidateDetailsPage';
 
 
 function App() {
@@ -16,24 +16,16 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            {/* TODO: refactorizar */}
+            <Route path="/login" element={<LoginPage />} />
             <Route
               path="/candidates"
-              element={
-                <RequireAuth>
-                  <CandidatesList />
-                </RequireAuth>
-              }
+              element={<RequireAuth><CandidatesListPage /></RequireAuth>}
             />
             <Route
               path="/candidates/:id"
-              element={
-                <RequireAuth>
-                  <CandidateData />
-                </RequireAuth>
-              }
+              element={<RequireAuth><CandidateDetailsPage /></RequireAuth>}
             />
+            <Route path="*" element={<h2>404 Not Found</h2>} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

@@ -1,6 +1,9 @@
 :root {
   --main-text-color: #121625;
   --primary-color: #32d4a4;
+  --primary-color-75: rgba(50, 212, 163, 0.75);
+  --primary-color-50: rgba(50, 212, 163, 0.50);
+  --primary-color-25: rgba(50, 212, 163, 0.10);
   --grey-1: #F8F8F9;
   --grey-2: #E5E5E5;
   --grey-3: #E6E6EA;

@@ -4,8 +4,6 @@
   gap: 30px;
 }
 
-/* Separar el input-group en otro archivo? */
-
 .input-group {
   font-size: 14px;
 }
@@ -26,6 +24,10 @@
   font-family: inherit;
   font-size: inherit;
   font-weight: 500;
+}
+
+.input-group__input:focus-visible {
+  outline: 1px solid var(--primary-color);
 }
 
 .input-group__input::placeholder {
