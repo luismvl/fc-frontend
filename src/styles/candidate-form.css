@@ -70,10 +70,25 @@
   min-width: 600px;
   flex-grow: 1;
   border-radius: 20px;
+  position: relative;
+}
+
+.candidate-cv::before {
+  content: '';
+  position: absolute;
+  box-shadow: inset 0px 0px 20px 5px rgba(0, 0, 0, 0.25);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-radius: 20px;
+
 }
 
 .candidate-cv iframe {
   border-radius: 20px;
+  position: relative;
   border: none;
-  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.25);
+  z-index: 1;
 }
