@@ -19,6 +19,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLogging, setIsLogging] = useState(false);
 
   if (auth) {
     return <Navigate to="/candidates" />;
@@ -26,17 +27,22 @@ const LoginPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setIsLogging(true);
     login({ email, password, rememberMe })
-      .then(() => navigate('/candidates'))
+      .then(() => {
+        setIsLogging(false);
+        navigate('/candidates');
+      })
       .catch((e) => {
+        setIsLogging(false);
         Store.addNotification({
-            message: 'Email o password incorrectos',
-            type: 'danger',                        
-            container: 'bottom-left',                
-            dismiss: {
-              duration: 3000 
-            }
-          })
+          message: 'Email o password incorrectos',
+          type: 'danger',
+          container: 'bottom-left',
+          dismiss: {
+            duration: 3000
+          }
+        });
       });
   };
 
@@ -71,7 +77,7 @@ const LoginPage = () => {
               />
               <a className="login__forgot-pass-link" href="##">He olvidado mi contraseña</a>
             </div>
-            <Button text="Iniciar Sesión" type="submit" span />
+            <Button disabled={isLogging} text="Iniciar Sesión" type="submit" span />
           </form>
         </div>
         <div className="login__footer">
