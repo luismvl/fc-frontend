@@ -3,7 +3,6 @@ import React from 'react';
 import { BiSearch } from 'react-icons/bi'; 
 
 import '../../styles/text-filter.css'
-import InputText from './InputText';
 
 const TextFilter = ({ onChangeTextFilter }) => {
 
