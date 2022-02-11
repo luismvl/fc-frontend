@@ -39,7 +39,7 @@ const Navbar = () => {
           </span>
       }
       <div className="navbar__user" onClick={() => setShowMenu(!showMenu)}>
-        <Avatar />
+        <Avatar username={auth.user.username}/>
         <span>{auth.user.username}</span>
         <BiChevronDown size="20px" />
         {showMenu ?
