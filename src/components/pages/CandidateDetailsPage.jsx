@@ -205,7 +205,11 @@ const CandidateDetailsPage = () => {
                 text="Borrar"
                 icon={<BiTrash size="20px" />}
                 variant="white"
-                onClick={() => setCv(null)}
+                onClick={() => {
+                  setCv(null);
+                  setCvUrl(null);
+                }}
+                type="button"
               />
             </div>
           </div>
