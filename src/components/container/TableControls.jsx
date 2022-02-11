@@ -3,16 +3,19 @@ import React from 'react';
 import TextFilter from '../pure/TextFilter';
 import { BiPlus } from 'react-icons/bi';
 
-import '../../styles/table.css'
+import '../../styles/table.css';
+import Button from '../pure/Button';
 
-const TableControls = () => {
+const TableControls = ({ openModal, closeModal, onChangeTextFilter }) => {
   return (
     <div className="table-controls">
-      <TextFilter />
-      <button className="button button--white">
-        <BiPlus size="20px" />
-        Añadir alumno
-      </button>
+      <TextFilter onChangeTextFilter={onChangeTextFilter} />
+      <Button
+        icon={<BiPlus size="20px" />}
+        variant="white"
+        onClick={openModal}
+        text="Añadir alumno"
+      />
     </div>
   );
 };

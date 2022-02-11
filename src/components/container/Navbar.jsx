@@ -4,17 +4,19 @@ import { useAuth } from '../../hooks/useAuth';
 
 import Logo from '../pure/Logo';
 import Avatar from '../pure/Avatar';
-import { BiChevronDown, BiArrowBack } from 'react-icons/bi';
+import { BiChevronDown, BiArrowBack, BiLogOut } from 'react-icons/bi';
 
 import '../../styles/navbar.css';
 
 
 const Navbar = () => {
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
   const [showLogo, setShowLogo] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
+
 
   useEffect(() => {
     if (location.pathname === '/candidates') {
@@ -36,12 +38,16 @@ const Navbar = () => {
             <BiArrowBack size="20px" /> Volver
           </span>
       }
-      <div className="navbar__menu">
+      <div className="navbar__user" onClick={() => setShowMenu(!showMenu)}>
         <Avatar />
-        <span>UserName</span>
+        <span>{auth.user.username}</span>
         <BiChevronDown size="20px" />
+        {showMenu ?
+          (<div className={"navbar__menu"}>
+            <div className="navbar__menuOption" onClick={logout}>Cerrar Sesión <BiLogOut /></div>
+          </div>) :
+          null}
       </div>
-
     </div>
   );
 };

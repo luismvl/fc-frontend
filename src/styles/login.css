@@ -11,7 +11,7 @@
 @media (max-width: 1200px) {
   .login-container {
     background-image: none;
-    background-color: #fff;
+    background-color: var(--grey-2);
   }
 }
 
@@ -32,6 +32,8 @@
     max-width: 450px;
     padding: 40px;
     margin: auto;
+    /* border-left: 1px solid var(--primary-color);
+    border-right: 1px solid var(--primary-color); */
   }
 }
 

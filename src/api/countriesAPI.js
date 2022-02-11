@@ -1,6 +1,6 @@
 async function getCountries() {
   try {
-    const res = await fetch("https://countriesnow.space/api/v0.1/countries", { method: 'GET' });
+    const res = await fetch('https://countriesnow.space/api/v0.1/countries', { method: 'GET' });
     const json = await res.json();
     return json.data.map(({ country, cities }) => ({ country, cities }));
   } catch (error) {

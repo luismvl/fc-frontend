@@ -6,13 +6,15 @@ import Navbar from './components/container/Navbar';
 import LoginPage from './components/pages/LoginPage';
 import CandidatesListPage from './components/pages/CandidatesListPage';
 import CandidateDetailsPage from './components/pages/CandidateDetailsPage';
-
+import { ReactNotifications, } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <AuthProvider>
+          <ReactNotifications />
           <Navbar />
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />

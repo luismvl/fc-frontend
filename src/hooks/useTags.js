@@ -4,6 +4,8 @@ import Dropdown from '../components/container/Dropdown';
 import TagsList from '../components/pure/TagsList';
 
 import { capitalize } from '../utils/capitalize.js';
+import { useAuth } from './useAuth';
+import { getAllTags } from '../api/tagsAPI';
 
 
 function useTags(candidate) {
@@ -11,36 +13,19 @@ function useTags(candidate) {
   const [selectedTags, setSelectedTags] = useState(null);
   const [tagsOptions, setTagsOptions] = useState([]);
 
+  const { auth } = useAuth();
+
   useEffect(() => {
-    // TODO Hacer fetch desde API
-    const tags = [
-      {
-        id: 1,
-        name: 'REACT'
-      },
-      {
-        id: 2,
-        name: 'JAVA'
-      },
-      {
-        id: 3,
-        name: 'SPRING'
-      },
-      {
-        id: 4,
-        name: 'HTML&CSS'
-      }
-    ];
+    getAllTags(auth.token)
+      .then(res => setTags(res));
 
-    setTags(tags);
-
-  }, []);
+  }, [auth.token]);
 
   useEffect(() => {
     setTagsOptions(tags.map(t => ({ value: t, label: capitalize(t.name) })));
   }, [tags]);
 
-  // Si candidate se para como argumento, asigna sus tags como seleccionadas
+  // Si candidate se pasa como argumento, asigna sus tags como seleccionadas
   useEffect(() => {
     if (candidate) {
       setSelectedTags(tagsOptions.filter(opt => candidate.tags.map(t => t.id).includes(opt.value.id)));
@@ -55,11 +40,15 @@ function useTags(candidate) {
     setSelectedTags((prev) => prev.filter(tag => tag.value.name !== tagName));
   };
 
+  const clearSelectedTags = () => {
+    setSelectedTags(null);
+  };
+
   const tagsDropdown = (
     <Dropdown
       isClearable={false}
       title="Etiquetas"
-      isLoading={tags.length === 0 ? true : false}
+      isLoading={!tags || tags.length === 0 ? true : false}
       value={selectedTags}
       options={tagsOptions}
       placeholder="Escribe para buscar..."
@@ -72,7 +61,7 @@ function useTags(candidate) {
   );
 
 
-  return { tagsDropdown, selectedTags, };
+  return { tagsDropdown, selectedTags, clearSelectedTags };
 }
 
 export default useTags;

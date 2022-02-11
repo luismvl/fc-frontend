@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 
 import '../../../src/styles/login.css';
@@ -8,50 +8,70 @@ import '../../../src/styles/general.css';
 import Logo from '../pure/Logo';
 import InputText from '../pure/InputText';
 import InputCheckbox from '../pure/InputCheckbox';
+import { Store } from 'react-notifications-component';
 
 import { useAuth } from '../../hooks/useAuth';
+import Button from '../pure/Button';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login, auth } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+
   if (auth) {
-    return <Navigate to="/candidates" />
+    return <Navigate to="/candidates" />;
   }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    login({ email, password, rememberMe })
+      .then(() => navigate('/candidates'))
+      .catch((e) => {
+        Store.addNotification({
+            message: 'Email o password incorrectos',
+            type: 'danger',                        
+            container: 'bottom-left',                
+            dismiss: {
+              duration: 3000 
+            }
+          })
+      });
+  };
 
   return (
     <div className="login-container">
       <div className="login">
         <div className="login__form">
           <Logo />
-          <form className="form" onSubmit={e => {
-            e.preventDefault();
-            login();
-            navigate('/candidates');
-          }}>
+          <form className="form" onSubmit={onSubmit} id="login-form">
             <InputText
               type="email"
-              name="email"
               placeholder="Introduce tu correo"
               labelText="Email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <InputText
               type="password"
-              name="password"
               placeholder="Introduce tu contaseña"
               labelText="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <div className="remember-forgot-pass-container">
               <InputCheckbox
-                type="checkbox"
-                name="remember"
                 label="Recuérdame"
+                name="remember-me"
+                value={rememberMe}
+                onChange={(e) => setRememberMe(!rememberMe)}
               />
-              <a className="login__forgot-pass-link" href="#">He olvidado mi contraseña</a>
+              <a className="login__forgot-pass-link" href="##">He olvidado mi contraseña</a>
             </div>
-            <button className="button button--span" type="submit">
-              Iniciar Sesión
-            </button>
+            <Button text="Iniciar Sesión" type="submit" span />
           </form>
         </div>
         <div className="login__footer">

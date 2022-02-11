@@ -38,7 +38,7 @@
 }
 
 .table tbody tr:hover {
-  background-color: var(--primary-color-25);
+  background-color: var(--grey-1);
 }
 
 .table th,
@@ -60,17 +60,12 @@
   padding-top: 12px;
   padding-bottom: 12px;
 }
-.table .th-wrapper {
+.table .th-withIcon {
   display: flex;
   gap: 10px;
   align-items: center;
-}
-
-.table th:nth-child(1),
-.table th:nth-child(3),
-.table th:nth-child(5),
-.table th:nth-child(6) {
   cursor: pointer;
+
 }
 
 .selected {

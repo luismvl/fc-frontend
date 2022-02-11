@@ -40,7 +40,7 @@
   align-items: center;
 }
 
-.checkbx-inputs--column {
+.checkbox-inputs--column {
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -1,45 +1,73 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import CandidatesTable from '../container/CandidatesTable';
 import TableControls from '../container/TableControls';
 import Filter from '../container/Filter';
+import Modal from '../container/Modal';
 
 import '../../styles/general.css';
 
-const defaultCandidates = [
-  {
-    "id": 1,
-    "name": "Luis Manuel Vela Linares",
-    "email": "luis@mail.com",
-    "phone": "+58 424 123 4567",
-    "country": "Venezuela",
-    "city": "Barinas",
-    "relocation": true,
-    "modality": "MIXED",
-    "cv_url": "http://res.cloudinary.com/dspkak5d0/raw/upload/v1643579201/fc-cvs/1-luismanuelvelalinares-cv.pdf",
-    "image_url": "http://res.cloudinary.com/dspkak5d0/image/upload/v1643577978/fc-images/1-luismanuelvelalinares-image.jpg",
-    "tags": [
-      {
-        "id": 2,
-        "name": "HTML&CSS"
-      },
-      {
-        "id": 1,
-        "name": "REACT"
-      }
-    ]
-  }
-];
+import { useAuth } from '../../hooks/useAuth';
+import { getAllCandidates } from '../../api/candidatesAPI';
+import sortCandidatesBy from '../../utils/sortCandidatesBy';
+
+
 
 const CandidatesListPage = () => {
+
+  const [showModal, setShowModal] = useState(false);
+  const [textFilter, setTextFilter] = useState('');
+  const [sortBy, setSortBy] = useState({ param: 'name', asc: true });
+
+  const { auth } = useAuth();
+  const initialCandidates = auth?.user?.candidates;
+  const [candidates, setCandidates] = useState(initialCandidates);
+
+  const candidatesToShow = sortCandidatesBy(candidates, sortBy).filter(c => c.name.includes(textFilter) || c.email.includes(textFilter));
+
+  useEffect(() => {
+    getAllCandidates(auth.token)
+      .then(candidates => {
+        setCandidates(candidates);
+      });
+  }, [auth]);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const onChangeTextFilter = (filter) => {
+    setTextFilter(filter);
+  };
+
+  const onFilterChange = useCallback((candidates) => {
+    setCandidates(candidates);
+  }, []);
+
+  const setSortByParams = (param, asc) => {
+    setSortBy(prev => ({ param, asc: !prev.asc }));
+  };
+
+  const addCreatedCandidate = (candidate) => {
+    setCandidates(prev => ([...prev, candidate]))
+  }
+
 
   return (
     <div className="candidates-list-wrapper">
       <div className="grow-1" >
-        <TableControls />
-        <CandidatesTable candidates={defaultCandidates} />
+        <Modal closeModal={closeModal} showModal={showModal} addCreatedCandidate={addCreatedCandidate} />
+        <TableControls
+          openModal={openModal}
+          closeModal={closeModal}
+          onChangeTextFilter={onChangeTextFilter} />
+        <CandidatesTable candidates={candidatesToShow} setSortByParams={setSortByParams} sortByParam={sortBy.param} />
       </div>
-      <Filter />
+      <Filter onFilterChange={onFilterChange} />
     </div>
   );
 };

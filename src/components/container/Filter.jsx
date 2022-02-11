@@ -1,35 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import InputCheckbox from '../pure/InputCheckbox';
-import FilterTag from '../pure/FilterTag';
 import { BiTrash } from 'react-icons/bi';
 
 import '../../styles/list-filters.css';
 import '../../styles/general.css';
 import '../../styles/form.css';
 
-import { capitalize } from '../../utils/capitalize';
 import useCountries from '../../hooks/useCountries';
-import Dropdown from './Dropdown';
-import TagsList from '../pure/TagsList';
 import useTags from '../../hooks/useTags';
+import { getAllCandidatesByFilter } from '../../api/candidatesAPI';
+import { useAuth } from '../../hooks/useAuth';
 
-const Filter = () => {
-
+const Filter = ({ onFilterChange }) => {
   const [remote, setRemote] = useState(false);
   const [presential, setPresential] = useState(false);
   const [relocationYes, setRelocationYes] = useState(false);
   const [relocationNo, setRelocationNo] = useState(false);
+  const { countriesDropdown, cittiesDropdown, selectedCountry, selectedCity, clearSelectedCityAndCountry } = useCountries();
+  const { tagsDropdown, selectedTags, clearSelectedTags } = useTags();
 
-  const { countriesDropdown, cittiesDropdown, setCountryAndCity, selectedCountry, selectedCity } = useCountries();
-  const { tagsDropdown, selectedTags } = useTags();
+  const { auth } = useAuth();
+
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      const t = setTimeout(() => {
+        const filterParams = {
+          remote, presential, relocationYes, relocationNo, selectedCountry,
+          selectedCity, selectedTags
+        };
+        getAllCandidatesByFilter(filterParams, auth.token)
+          .then(res => onFilterChange(res));
+      }, 1500);
+      return () => {
+        clearTimeout(t);
+      };
+    }
+  }, [remote, presential, relocationYes, relocationNo, selectedCountry, selectedCity, selectedTags, onFilterChange, auth.token]);
+
+  const clearFilter = () => {
+    setRemote(false);
+    setPresential(false);
+    setRelocationYes(false);
+    setRelocationNo(false);
+    clearSelectedCityAndCountry();
+    clearSelectedTags();
+  };
 
 
   return (
     <div className="list-filters container">
       <div className="list-filters__title">
         Filtros de búsqueda
-        <BiTrash className="clear-filter-button" size="30px" />
+        <BiTrash className="clear-filter-button" size="30px" onClick={clearFilter} />
       </div>
 
       {tagsDropdown}
@@ -38,7 +65,7 @@ const Filter = () => {
 
       {cittiesDropdown}
 
-      <div className="checkbx-inputs--column">
+      <div className="checkbox-inputs--column">
         <span className="input-group__label">Presencial / a distancia</span>
         <InputCheckbox
           name="presential"
@@ -53,7 +80,7 @@ const Filter = () => {
           onChange={(() => setRemote(!remote))}
         />
       </div>
-      <div className="checkbx-inputs--column">
+      <div className="checkbox-inputs--column">
         <span className="input-group__label">Posibilidad traslado</span>
         <InputCheckbox
           name="yes"

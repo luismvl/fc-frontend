@@ -28,12 +28,17 @@
 }
 
 .button {
-  background-color: var(--primary-color);
   display: inline-flex;
-  gap: 10px;
   align-items: center;
   justify-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  background-color: var(--primary-color);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; 
   height: 40px;
+  width: fit-content;
   padding: 0 10px;
   border-radius: 8px;
   border: none;
@@ -54,6 +59,11 @@
   background-color: var(--grey-4);
   border: none;
   color: #fff;
+}
+
+.button--disabled {
+  background-color: var(--grey-3);
+  cursor: not-allowed;
 }
 
 .button--span {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { getCountries, getCitiesByCountry } from '../api/countries.js';
+import { getCountries, getCitiesByCountry } from '../api/countriesAPI.js';
 import Dropdown from '../components/container/Dropdown.jsx';
 import { capitalize } from '../utils/capitalize.js';
 
@@ -9,9 +9,16 @@ function useCountries() {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
+  const [countriesOptions, setCountriesOptions] = useState([]);
+  const [citiesOptions, setCitiesOptions] = useState([]);
 
-  const countriesOptions = countries.map(c => ({ value: c, label: c.country }));
-  const citiesOptions = selectedCountry?.value?.cities?.map(c => ({ value: c, label: capitalize(c) })) ?? [];
+  useEffect(() => {
+    setCitiesOptions(selectedCountry?.value?.cities?.map(c => ({ value: c, label: capitalize(c) })));
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    setCountriesOptions(countries.map(c => ({ value: c, label: c.country })));
+  }, [countries]);
 
   useEffect(() => {
     getCountries().then(countries => {
@@ -32,16 +39,25 @@ function useCountries() {
     setSelectedCountry({ value: { country, cities: undefined }, label: country });
     setSelectedCity({ value: city, label: city });
     getCitiesByCountry(country)
-      .then(cities => setSelectedCountry({ label: country, value: { country, cities } }));
+      .then(cities => {
+        setSelectedCountry({ label: country, value: { country, cities } });
+        setSelectedCity({ value: city, label: city });
+
+      });
   };
+
+  const clearSelectedCityAndCountry = () => {
+    setSelectedCountry(null);
+  };
+
 
   const countriesDropdown = (
     <Dropdown
       title="País"
       value={selectedCountry}
-      isSearchable={false}
+      isSearchable={true}
       isLoading={countries.length === 0 || countries.cities ? true : false}
-      placeholder="Selecciona un país"
+      placeholder="Elige un país"
       options={countriesOptions}
       onChange={onChangeCountrySelect}
     />
@@ -51,15 +67,16 @@ function useCountries() {
     <Dropdown
       title="Ciudad"
       value={selectedCity}
-      placeholder="Selecciona una ciudad"
-      isLoading={ !selectedCountry?.value?.cities ? true : false}
-      isDisabled={selectedCountry ? false : true}
+      placeholder="Elige una ciudad"
       options={citiesOptions}
       onChange={onChangeCitySelect}
     />
   );
 
-  return { countries, countriesDropdown, cittiesDropdown, setCountryAndCity, selectedCity, selectedCountry };
+  return {
+    countries, countriesDropdown, cittiesDropdown, setCountryAndCity, selectedCity, selectedCountry,
+    clearSelectedCityAndCountry
+  };
 }
 
 export default useCountries;

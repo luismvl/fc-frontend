@@ -75,6 +75,7 @@
 
 .candidate-cv::before {
   content: '';
+  pointer-events: none;
   position: absolute;
   box-shadow: inset 0px 0px 20px 5px rgba(0, 0, 0, 0.25);
   top: 0;
@@ -91,4 +92,16 @@
   position: relative;
   border: none;
   z-index: 1;
+}
+
+.candidate__noCv {
+  background-color: var(--grey-6);
+  border-radius: 20px;
+  color: var(--grey-1);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 30px;
 }
