@@ -214,7 +214,7 @@ const CandidateDetailsPage = () => {
         </form>
       </div>
       <div className="candidate-cv">
-        {cv ?
+        {cvUrl ?
           (<iframe src={cvUrl} width="100%" height="100%" title="candidate-cv"></iframe>) :
           <div className="candidate__noCv">No se pudo cargar el CV <BiFile /></div>}
       </div>
