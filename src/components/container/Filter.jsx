@@ -35,7 +35,7 @@ const Filter = ({ onFilterChange }) => {
         };
         getAllCandidatesByFilter(filterParams, auth.token)
           .then(res => onFilterChange(res));
-      }, 1500);
+      }, 1000);
       return () => {
         clearTimeout(t);
       };
