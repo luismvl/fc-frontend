@@ -25,5 +25,5 @@ export default function makeFilter(filterObj) {
     filterArr.push(`tags:%5B${tagsStr}%5D`);
   }
   
-  return filterArr.join("&")
+  return filterArr.join(",")
 }

@@ -48,6 +48,7 @@ function useCountries() {
 
   const clearSelectedCityAndCountry = () => {
     setSelectedCountry(null);
+    setSelectedCity(null);
   };
 
 
@@ -70,6 +71,7 @@ function useCountries() {
       placeholder="Elige una ciudad"
       options={citiesOptions}
       onChange={onChangeCitySelect}
+      isDisabled={citiesOptions?.length === 0}
     />
   );
 

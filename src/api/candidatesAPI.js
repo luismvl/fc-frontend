@@ -16,7 +16,7 @@ export function getAllCandidates(token) {
       return res.json();
     });;
 }
-// { remote, presential, relocationYes, relocationNo, selectedCountry, selectedCity, selectedTags }
+// filter = { remote, presential, relocationYes, relocationNo, selectedCountry, selectedCity, selectedTags }
 export function getAllCandidatesByFilter(filter, token) {
   const options = {
     method: 'GET',
@@ -26,7 +26,7 @@ export function getAllCandidatesByFilter(filter, token) {
   };
   const filterStr = makeFilter(filter);
 
-  return fetch(`https://fc-back-end.herokuapp.com/candidates/search?search=${filterStr}`, options)
+  return fetch(`https://fc-back-end.herokuapp.com/candidates/search?filter=${filterStr}`, options)
     .then(res => {
       if (!res.ok) {
         throw new Error(`http status ${res.status}`);
